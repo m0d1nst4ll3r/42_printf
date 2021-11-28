@@ -6,28 +6,18 @@
 /*   By: rpohlen <rpohlen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 20:21:23 by rpohlen           #+#    #+#             */
-/*   Updated: 2021/11/27 20:57:04 by rpohlen          ###   ########.fr       */
+/*   Updated: 2021/11/28 19:13:49 by rpohlen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_printf_x(void)
+int	ft_printf_x(int h, int hcase)
 {
+	return (ft_putnhex(h, hcase, 0));
 }
 
-void	ft_printf_xx(void)
+int	ft_printf_p(void *p)
 {
-}
-
-void	ft_printf_p(void *p)
-{
-	int	i;
-
-	i = 11;
-	while (i >= 0)
-	{
-		ft_puthex((long unsigned int)p >> i * 4 & 0xff, 0);
-		i--;
-	}
+	return (ft_putaddr(p));
 }
