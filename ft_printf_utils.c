@@ -6,7 +6,7 @@
 /*   By: rpohlen <rpohlen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 20:27:41 by rpohlen           #+#    #+#             */
-/*   Updated: 2021/11/28 19:13:34 by rpohlen          ###   ########.fr       */
+/*   Updated: 2021/11/30 12:35:05 by rpohlen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@ static void	ft_putchar(char c)
 	write(1, &c, 1);
 }
 
-int	ft_putnbr(long int n, int size)
+void	ft_putnbr(long int n, int *count)
 {
 	if (n < 0)
 	{
 		ft_putchar('-');
 		n = -n;
-		size++;
+		(*count)++;
 	}
 	if (n > 9)
-		return (ft_putnbr(n / 10, size + 1));
+		ft_putnbr(n / 10, count);
 	ft_putchar(n % 10 + '0');
-	return (size + 1);
+	(*count)++;
 }
 
 int	ft_putchex(char h, int hcase)
@@ -42,30 +42,34 @@ int	ft_putchex(char h, int hcase)
 	return (1);
 }
 
-int	ft_putnhex(long int h, int hcase, int size)
+void	ft_putnhex(long int h, int hcase, int *count)
 {
 	if (h < 0)
 	{
 		ft_putchar('-');
 		h = -h;
-		size++;
+		(*count)++;
 	}
 	if (h > 15)
-		return (ft_putnhex(h / 16, hcase, size + 1));
+		ft_putnhex(h / 16, hcase, count);
 	ft_putchex(h % 16, hcase);
-	return (size + 1);
+	(*count)++;
 }
 
 int	ft_putaddr(void *p)
 {
 	int	i;
+	int	ret;
 
 	write(1, "0x", 2);
-	i = 11;
+	ret = 15;
+	while (ret > 0 && ((long unsigned int)p >> (ret * 4) & 0xf) == 0)
+		ret--;
+	i = ret;
 	while (i >= 0)
 	{
-		ft_putchex(((long unsigned int)p >> (i * 4)) & 0xf, 0);
+		ft_putchex((long unsigned int)p >> (i * 4) & 0xf, 0);
 		i--;
 	}
-	return (14);
+	return (ret + 3);
 }

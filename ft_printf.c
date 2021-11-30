@@ -6,59 +6,62 @@
 /*   By: rpohlen <rpohlen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:04:29 by rpohlen           #+#    #+#             */
-/*   Updated: 2021/11/28 20:22:51 by rpohlen          ###   ########.fr       */
+/*   Updated: 2021/11/30 12:42:23 by rpohlen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
 
-void	ft_printf_args(char c, ...)
+int	ft_printf_args(char c, va_list ap)
 {
 	if (c == 'c')
-		return ;
+		return (ft_printf_c(va_arg(ap, int)));
 	else if (c == 's')
-		return ;
+		return (ft_printf_s(va_arg(ap, char *)));
 	else if (c == 'i' || c == 'd')
-		return ;
+		return (ft_printf_id(va_arg(ap, int)));
+	else if (c == 'u')
+		return (ft_printf_u(va_arg(ap, unsigned int)));
 	else if (c == 'x')
-		return ;
+		return (ft_printf_x(va_arg(ap, unsigned int), 0));
 	else if (c == 'X')
-		return ;
+		return (ft_printf_x(va_arg(ap, unsigned int), 1));
 	else if (c == 'p')
-		return ;
-	else
+		return (ft_printf_p(va_arg(ap, void *)));
+	else if (c == '%')
 	{
 		write(1, "%", 1);
-		write(1, &c, 1);
+		return (1);
 	}
+	write(1, "%", 1);
+	write(1, &c, 1);
+	return (2);
 }
 
-int	ft_printf(const char *str, int ac, ...)
+int	ft_printf(const char *str, ...)
 {
-	va_list	av;
+	va_list	ap;
+	size_t	i;
+	size_t	count;
 
-	va_start(av, ac);
-	va_end()
-	(void)str;
-	return (0);
-}
-
-int	main(void)
-{
-	void	*p;
-
-	p = &p;
-	ft_printf_c('H');
-	ft_printf_s("ello\n");
-	ft_printf_id(2147483647);
-	ft_printf_c('\n');
-	ft_printf_u(4000000000);
-	ft_printf_c('\n');
-	ft_printf_x(257, 0);
-	ft_printf_c('\n');
-	ft_printf_x(257, 1);
-	ft_printf_c('\n');
-	ft_printf_p(p);
-	ft_printf_c('\n');
+	va_start(ap, str);
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (str[i] == '%' && str[i + 1])
+		{
+			count += ft_printf_args(str[i + 1], ap);
+			i += 2;
+		}
+		else
+		{
+			write(1, str + i, 1);
+			count++;
+			i++;
+		}
+	}
+	va_end(ap);
+	return (count);
 }
