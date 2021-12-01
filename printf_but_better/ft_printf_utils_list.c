@@ -6,7 +6,7 @@
 /*   By: rpohlen <rpohlen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:14:32 by rpohlen           #+#    #+#             */
-/*   Updated: 2021/11/30 17:24:28 by rpohlen          ###   ########.fr       */
+/*   Updated: 2021/12/01 19:06:53 by rpohlen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,20 @@ static t_pflist	*printf_lstnew(char c)
 	return (new);
 }
 
-void	printf_lstadd(t_pflist **list, char c)
+void	printf_lstadd_front(t_pflist **list, char c)
+{
+	t_pflist	*new;
+
+	if (! list)
+		return ;
+	new = printf_lstnew(c);
+	if (!new)
+		return ;
+	new->next = *list;
+	*list = new;
+}
+
+void	printf_lstadd_back(t_pflist **list, char c)
 {
 	t_pflist	*new;
 	t_pflist	*tmp;
