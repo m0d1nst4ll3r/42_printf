@@ -6,13 +6,24 @@
 /*   By: rpohlen <rpohlen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:08:46 by rpohlen           #+#    #+#             */
-/*   Updated: 2021/12/01 19:27:46 by rpohlen          ###   ########.fr       */
+/*   Updated: 2021/12/02 19:05:27 by rpohlen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
+/* -------------------------------------------------------------------- **
+**	Useful features to add later:
+**
+**	- %m		prints the current errno with strerror(errno)
+**	- %ld		for long ints
+**	- %f		for doubles
+**	- an fprintf which does the same thing as printf but with a channel
+**		argument such as stderr or the fd of an open file.
+** -------------------------------------------------------------------- */
+
+# include <stdarg.h>
 # include <unistd.h>
 # include <stdlib.h>
 
@@ -60,8 +71,7 @@ typedef struct s_pflist
 **	- '0x' with any padding : the '0x' is counted in the length
 **	- ' ' or '+' with any padding : the ' ' or '+' is counted
 **	- ' ' and '+' both present : '+' takes precedence
-**	- more than one of width, minus or 0 present :
-**		- > 0 > width
+**	- width and minus both present : width is ignored (see error case)
 **	- dot with '0x' : the '0x' is ignored
 **	- dot with ' ' or '+' : both are ignored
 **	- dot with width or minus : the zeroes are added before the spaces
@@ -69,13 +79,18 @@ typedef struct s_pflist
 **		if a value followed the 0, it is counted as a width value
 **
 **	Error cases:
-**	- incompatible flag/conversion (ex: %#i), flag will be ignored
-**	- incompatible flags, flags will have a priority
-**		this behavior differs from the official printf
+**	- incompatible flag/conversion (ex: %#i)
+**		we ignore the flags and so does the official printf
+**	- incompatible flags (ex: width and minus)
+**		we always consider that flags have a priority
 **		the official printf only ignores incompatible flags when they
 **		have no values associated with them, otherwise it will count
 **		their values as an incompatible string of regular characters
-**		and print the entire instruction
+**		and print the entire expression
+**	- flag redefinition, last flag definition is used
+**		this behavior differs from the official printf which considers
+**		flag redefinition to be valid only as long as the optional
+**		values are redefined only once and for the last flag occurence
 ** -------------------------------------------------------------------- */
 typedef struct s_pfflags
 {
@@ -88,18 +103,36 @@ typedef struct s_pfflags
 	int	dot;
 }			t_pfflags;
 
-/* -------------------------------------------------------------------- **
-**	Useful features to add later:
-**
-**	- %m		prints the current errno with strerror(errno)
-**	- %ld		for long ints
-**	- %f		for doubles
-**	- an fprintf which does the same thing as printf but with a channel
-**		argument such as stderr or the fd of an open file.
-** -------------------------------------------------------------------- */
-void	printf_lstclear(t_pflist *list);
+//	ft_printf_utils.c
+char	*ft_strchr(char *s, char c);
+char	ft_get_char(int i, char type);
+int		ft_atoi(char *s, int *i);
+
+//	ft_printf_utils_list.c
 void	printf_lstadd_front(t_pflist **list, char c);
 void	printf_lstadd_back(t_pflist **list, char c);
 int		printf_lstsize(t_pflist *list);
+void	printf_lstclear(t_pflist *list);
+
+//	ft_printf_args.c
+void	printf_pad(t_pflist **list, int len, char dir, char fill);
+void	printf_i(long int i, t_pflist **list, t_pfflags flags);
+void	printf_u(unsigned int u, char type, t_pflist **list, t_pfflags flags);
+
+//	ft_printf_args2.c
+void	printf_c(char c, t_pflist **list, t_pfflags flags);
+void	printf_s(char *s, t_pflist **list, t_pfflags flags);
+void	printf_p(void *p, t_pflist **list, t_pfflags flags);
+
+//	ft_printf_flags.c
+int		flag_interpreter(char *s, t_pfflags *flags);
+void	reset_flags(t_pfflags *flags);
+
+//	ft_printf_core.c
+void	printf_fill_output(char *format, va_list ap, t_pflist **output);
+void	printf_print_output(t_pflist *output);
+
+//	ft_printf.c
+int		ft_printf(const char *format, ...);
 
 #endif

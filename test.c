@@ -1,5 +1,4 @@
 #include "ft_printf.h"
-
 #include <stdio.h>
 
 void	tt_test()
@@ -18,8 +17,5 @@ void	tt_test()
 
 int	main()
 {
-	printf("[%.6i]\n", -14542);
-	printf("[%.2s]\n", "hello");
-	printf("[%.2i]\n", 8546);
-	printf("[% -6i]\n", -14542);
+	tt_test();
 }

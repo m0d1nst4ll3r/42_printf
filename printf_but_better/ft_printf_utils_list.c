@@ -6,7 +6,7 @@
 /*   By: rpohlen <rpohlen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:14:32 by rpohlen           #+#    #+#             */
-/*   Updated: 2021/12/01 19:06:53 by rpohlen          ###   ########.fr       */
+/*   Updated: 2021/12/02 17:46:12 by rpohlen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,16 @@ int	printf_lstsize(t_pflist *list)
 		list = list->next;
 	}
 	return (i);
+}
+
+void	printf_lstclear(t_pflist *list)
+{
+	t_pflist	*elem;
+
+	while (list)
+	{
+		elem = list;
+		list = list->next;
+		free(elem);
+	}
 }
