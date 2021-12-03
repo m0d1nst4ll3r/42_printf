@@ -1,35 +1,15 @@
+#include "ft_printf.h"
 #include <stdio.h>
-#include <stdlib.h>
 
-typedef struct s_test
+int	main(void)
 {
-	struct s_test	*next;
-}					t_test;
+	unsigned int test = 4000000000;
+	printf("hello this is printf %d %-6i %u %#6x %X %p %c %s\n\n", 78, -800, test, 256, 4564645, &main, 'z', "Zaya");
 
-void	test_add(t_test **test, t_test *add)
-{
-	add->next = *test;
-	*test = add;
-}
-
-int	main()
-{
-	t_test	*elem1;
-	t_test	*elem2;
-	t_test	*elem3;
-	t_test	*elem4;
-
-	elem1 = malloc(sizeof(t_test));
-	elem2 = malloc(sizeof(t_test));
-	elem3 = malloc(sizeof(t_test));
-	elem4 = malloc(sizeof(t_test));
-
-	elem1->next = elem2;
-	elem2->next = elem3;
-	elem3->next = NULL;
-
-	printf("elem4:       %p\n", elem4);
-	printf("elem3->next: %p\n", elem3->next);
-	test_add(&(elem3->next), elem4);
-	printf("elem3->next: %p\n", elem3->next);
+	ft_printf("hello hello, my ft_printf function works pretty well I'd say\n");
+	ft_printf("but does it work with an int ?!? %i YES IT DOES\n", 23);
+	ft_printf("omg omg omg so amazing %04-6i %i %i %i %i %i %i\n", 12, 12345, 20000, 2147483647, 2147483648, -2147483648, -1000);
+	ft_printf("address test %p\n", &main);
+	ft_printf("address test %#x\n", 4564645);
+	ft_printf("address test %s\n", "this is a STRING");
 }

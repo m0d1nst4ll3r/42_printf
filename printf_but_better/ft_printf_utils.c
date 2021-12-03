@@ -6,7 +6,7 @@
 /*   By: rpohlen <rpohlen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 14:10:35 by rpohlen           #+#    #+#             */
-/*   Updated: 2021/12/02 17:19:35 by rpohlen          ###   ########.fr       */
+/*   Updated: 2021/12/04 00:04:59 by rpohlen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ char	ft_get_char(int i, char type)
 	if (i < 10)
 		return (i + '0');
 	else if (type == 'X')
-		return (i - '0' + 'A');
+		return (i - 10 + 'A');
 	else
-		return (i - '0' + 'a');
+		return (i - 10 + 'a');
 }
 
 //	Modified atoi which refuses any initial 0

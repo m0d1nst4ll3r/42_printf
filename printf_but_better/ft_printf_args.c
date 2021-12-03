@@ -6,7 +6,7 @@
 /*   By: rpohlen <rpohlen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 17:29:03 by rpohlen           #+#    #+#             */
-/*   Updated: 2021/12/02 16:47:12 by rpohlen          ###   ########.fr       */
+/*   Updated: 2021/12/03 23:38:54 by rpohlen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,13 @@ static void	printf_i_rec(long int i, int base, char type, t_pflist **list)
 /* -------------------------------------------------------------------- **
 **		printf_i
 **
+**	Order :
+**		1. the number alone (no '-')
+**		2. dot padding
+**		3. sign, or ' '
+**		4. zero padding
+**		5. blank padding
+**
 **	The following flags are taken into account :
 **		- space		adds a ' ' before value if positive
 **		- plus		adds a '+' before value if positive
@@ -78,7 +85,7 @@ static void	printf_i_rec(long int i, int base, char type, t_pflist **list)
 ** -------------------------------------------------------------------- */
 void	printf_i(long int i, t_pflist **list, t_pfflags flags)
 {
-	printf_i_rec(i, 10, 0, list);
+	printf_i_rec(ABS(i), 10, 0, list);
 	if (flags.dot > 0)
 		printf_pad(list, flags.dot - printf_lstsize(*list), 'l', '0');
 	if (i < 0)
@@ -103,6 +110,13 @@ void	printf_i(long int i, t_pflist **list, t_pfflags flags)
 
 /* -------------------------------------------------------------------- **
 **		printf_u
+**
+**	Order :
+**		1. the number
+**		2. dot padding
+**		3. hex prefix '0x'
+**		4. zero padding
+**		5. blank padding
 **
 **	The following flags are taken into account :
 **		- sharp		adds a '0x' before the hexadecimal value

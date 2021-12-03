@@ -6,7 +6,7 @@
 /*   By: rpohlen <rpohlen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 13:55:40 by rpohlen           #+#    #+#             */
-/*   Updated: 2021/12/02 15:49:19 by rpohlen          ###   ########.fr       */
+/*   Updated: 2021/12/03 23:58:22 by rpohlen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 /* -------------------------------------------------------------------- **
 **		printf_c
+**
+**	Order :
+**		1. the character
+**		2. blank padding
 **
 **	The following flags are taken into account :
 **		- width		pad with ' ' to the left
@@ -35,6 +39,10 @@ void	printf_c(char c, t_pflist **list, t_pfflags flags)
 /* -------------------------------------------------------------------- **
 **		printf_s
 **
+**	Order :
+**		1. the (capped) string
+**		2. blank padding
+**
 **	The following flags are taken into account :
 **		- dot		limit the amount of characters printed
 **		- width		pad with ' ' to the left
@@ -50,7 +58,7 @@ void	printf_s(char *s, t_pflist **list, t_pfflags flags)
 
 	i = 0;
 	while (s && (flags.dot < 0 || i < flags.dot) && s[i])
-		printf_lstadd_back(list, s[i]);
+		printf_lstadd_back(list, s[i++]);
 	if (flags.width > 0)
 		printf_pad(list, flags.width - printf_lstsize(*list), 'l', ' ');
 	if (flags.minus > 0)
@@ -59,6 +67,10 @@ void	printf_s(char *s, t_pflist **list, t_pfflags flags)
 
 /* -------------------------------------------------------------------- **
  **		printf_p
+**
+**	Order :
+**		1. hex prefix '0x' + the value
+**		2. blank padding
  **
  **	The following flags are taken into account :
  **		- width		pad with ' ' to the left

@@ -6,7 +6,7 @@
 /*   By: rpohlen <rpohlen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:08:46 by rpohlen           #+#    #+#             */
-/*   Updated: 2021/12/02 19:06:32 by rpohlen          ###   ########.fr       */
+/*   Updated: 2021/12/03 23:44:14 by rpohlen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <stdarg.h>
 # include <unistd.h>
 # include <stdlib.h>
+
+# define ABS(x) (x >= 0 ? x : -x) //remove this you ape stdio printf
 
 //	This list will be used throughout our program to store printf's output
 typedef struct s_pflist
@@ -101,38 +103,40 @@ typedef struct s_pfflags
 	int	minus;
 	int	width;
 	int	dot;
-}			t_pfflags;
+}		t_pfflags;
 
 //	ft_printf_utils.c
-char	*ft_strchr(char *s, char c);
-char	ft_get_char(int i, char type);
-int		ft_atoi(char *s, int *i);
+char		*ft_strchr(char *s, char c);
+char		ft_get_char(int i, char type);
+int			ft_atoi(char *s, int *i);
 
 //	ft_printf_utils_list.c
-void	printf_lstadd_front(t_pflist **list, char c);
-void	printf_lstadd_back(t_pflist **list, char c);
-int		printf_lstsize(t_pflist *list);
-void	printf_lstclear(t_pflist *list);
+void		printf_lstadd_front(t_pflist **list, char c);
+void		printf_lstadd_back(t_pflist **list, char c);
+int			printf_lstsize(t_pflist *list);
+void		printf_lstclear(t_pflist *list);
+t_pflist	**printf_lstlastp(t_pflist **list);
 
 //	ft_printf_args.c
-void	printf_pad(t_pflist **list, int len, char dir, char fill);
-void	printf_i(long int i, t_pflist **list, t_pfflags flags);
-void	printf_u(unsigned int u, char type, t_pflist **list, t_pfflags flags);
+void		printf_pad(t_pflist **list, int len, char dir, char fill);
+void		printf_i(long int i, t_pflist **list, t_pfflags flags);
+void		printf_u(unsigned int u, char type, t_pflist **list,
+				t_pfflags flags);
 
 //	ft_printf_args2.c
-void	printf_c(char c, t_pflist **list, t_pfflags flags);
-void	printf_s(char *s, t_pflist **list, t_pfflags flags);
-void	printf_p(void *p, t_pflist **list, t_pfflags flags);
+void		printf_c(char c, t_pflist **list, t_pfflags flags);
+void		printf_s(char *s, t_pflist **list, t_pfflags flags);
+void		printf_p(void *p, t_pflist **list, t_pfflags flags);
 
 //	ft_printf_flags.c
-int		flag_interpreter(char *s, t_pfflags *flags);
-void	reset_flags(t_pfflags *flags);
+int			printf_flag_interpreter(char *s, t_pfflags *flags);
+void		printf_reset_flags(t_pfflags *flags);
 
-//	ft_printf_core.c
-void	printf_fill_output(char *format, va_list ap, t_pflist **output);
-void	printf_print_output(t_pflist *output);
+//	ft_printf_output.c
+void		printf_fill_output(char *format, va_list ap, t_pflist **output);
+void		printf_print_output(t_pflist *output);
 
 //	ft_printf.c
-int		ft_printf(const char *format, ...);
+int			ft_printf(const char *format, ...);
 
 #endif
