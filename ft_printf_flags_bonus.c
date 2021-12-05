@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_flags.c                                  :+:      :+:    :+:   */
+/*   ft_printf_flags_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpohlen <rpohlen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 18:00:18 by rpohlen           #+#    #+#             */
-/*   Updated: 2021/12/05 14:59:08 by rpohlen          ###   ########.fr       */
+/*   Updated: 2021/12/05 15:24:17 by rpohlen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
 
 //	Resets all of the flags to their default -1 value
 //	Used right after encountering any % expression
