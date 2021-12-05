@@ -6,7 +6,7 @@
 /*   By: rpohlen <rpohlen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 18:00:18 by rpohlen           #+#    #+#             */
-/*   Updated: 2021/12/04 00:04:53 by rpohlen          ###   ########.fr       */
+/*   Updated: 2021/12/04 13:51:57 by rpohlen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,9 @@ int	printf_flag_interpreter(char *s, t_pfflags *flags)
 		flags->space = -1;
 	if (flags->width >= 0 && flags->minus >= 0)
 		flags->width = -1;
+	if ((flags->width >= 0 || flags->minus >= 0) && flags->zero >= 0)
+		flags->zero = -1;
 	if (flags->zero >= 0 && flags->dot >= 0)
-		flags->zero = 0;
+		flags->zero = -1;
 	return (i);
 }

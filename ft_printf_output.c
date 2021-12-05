@@ -6,7 +6,7 @@
 /*   By: rpohlen <rpohlen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 15:52:24 by rpohlen           #+#    #+#             */
-/*   Updated: 2021/12/03 23:32:33 by rpohlen          ###   ########.fr       */
+/*   Updated: 2021/12/04 14:30:07 by rpohlen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	printf_fill_output(char *format, va_list ap, t_pflist **output)
 				printf_lstadd_back(output, '%');
 			else if (! convert(format[i], ap, printf_lstlastp(output), flags))
 			{
-				i -= fi - 1;
+				i -= fi + 1;
 				printf_lstadd_back(output, '%');
 			}
 		}

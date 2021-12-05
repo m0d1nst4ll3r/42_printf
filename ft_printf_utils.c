@@ -5,71 +5,63 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpohlen <rpohlen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/27 20:27:41 by rpohlen           #+#    #+#             */
-/*   Updated: 2021/11/30 12:35:05 by rpohlen          ###   ########.fr       */
+/*   Created: 2021/12/02 14:10:35 by rpohlen           #+#    #+#             */
+/*   Updated: 2021/12/04 14:07:21 by rpohlen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	ft_putchar(char c)
+//	Searches for c in s
+//	Returns the address of the first occurence of c
+//		or NULL if not found
+char	*ft_strchr(char *s, char c)
 {
-	write(1, &c, 1);
-}
+	unsigned int	i;
 
-void	ft_putnbr(long int n, int *count)
-{
-	if (n < 0)
+	i = 0;
+	while (s && s[i])
 	{
-		ft_putchar('-');
-		n = -n;
-		(*count)++;
+		if (s[i] == c)
+			return (s + i);
+		i++;
 	}
-	if (n > 9)
-		ft_putnbr(n / 10, count);
-	ft_putchar(n % 10 + '0');
-	(*count)++;
+	return (NULL);
 }
 
-int	ft_putchex(char h, int hcase)
+//	Converts an int into a decimal / hexadecimal value
+//	The int has to be between 0 and 15
+char	ft_get_char(int i, char type)
 {
-	if (h < 10)
-		ft_putchar(h + '0');
-	else if (hcase)
-		ft_putchar(h - 10 + 'A');
+	if (i < 10)
+		return (i + '0');
+	else if (type == 'X')
+		return (i - 10 + 'A');
 	else
-		ft_putchar(h - 10 + 'a');
-	return (1);
+		return (i - 10 + 'a');
 }
 
-void	ft_putnhex(long int h, int hcase, int *count)
+//	Modified atoi which refuses any initial 0
+//	Modifies the index directly
+int	ft_atoi(char *s, int *i)
 {
-	if (h < 0)
+	int	res;
+
+	res = 0;
+	if (s[*i] == 0)
+		return (0);
+	while (s[*i] >= '0' && s[*i] <= '9')
 	{
-		ft_putchar('-');
-		h = -h;
-		(*count)++;
+		res = res * 10 + s[*i] - '0';
+		(*i)++;
 	}
-	if (h > 15)
-		ft_putnhex(h / 16, hcase, count);
-	ft_putchex(h % 16, hcase);
-	(*count)++;
+	(*i)--;
+	return (res);
 }
 
-int	ft_putaddr(void *p)
+long int	ft_abs(long int i)
 {
-	int	i;
-	int	ret;
-
-	write(1, "0x", 2);
-	ret = 15;
-	while (ret > 0 && ((long unsigned int)p >> (ret * 4) & 0xf) == 0)
-		ret--;
-	i = ret;
-	while (i >= 0)
-	{
-		ft_putchex((long unsigned int)p >> (i * 4) & 0xf, 0);
-		i--;
-	}
-	return (ret + 3);
+	if (i < 0)
+		return (-i);
+	return (i);
 }
