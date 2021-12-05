@@ -6,7 +6,7 @@
 /*   By: rpohlen <rpohlen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 17:29:03 by rpohlen           #+#    #+#             */
-/*   Updated: 2021/12/05 14:57:14 by rpohlen          ###   ########.fr       */
+/*   Updated: 2021/12/05 15:17:11 by rpohlen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,27 +62,27 @@ static void	printf_i_rec(long int i, int base, char type, t_pflist **list)
 }
 
 /* -------------------------------------------------------------------- **
- **		printf_i
- **
- **	Order :
- **		1. the number alone (no '-')
- **		2. dot padding
- **		3. sign, or ' '
- **		4. zero padding
- **		5. blank padding
- **
- **	The following flags are taken into account :
- **		- space		adds a ' ' before value if positive
- **		- plus		adds a '+' before value if positive
- **		- dot		pad with '0' to the left (ignores non-digits)
- **		- zero		pad with '0' to the left (includes non-digits)
- **		- width		pad with ' ' to the left
- **		- minus		pad with ' ' to the right
- **
- **	- i			the signed int to print
- **	- list		the element to start writing from in the list
- **	- flags		the flags (such as #05-8) in structure form
- ** -------------------------------------------------------------------- */
+**		printf_i
+**
+**	Order :
+**		1. the number alone (no '-')
+**		2. dot padding
+**		3. sign, or ' '
+**		4. zero padding
+**		5. blank padding
+**
+**	The following flags are taken into account :
+**		- space		adds a ' ' before value if positive
+**		- plus		adds a '+' before value if positive
+**		- dot		pad with '0' to the left (ignores non-digits)
+**		- zero		pad with '0' to the left (includes non-digits)
+**		- width		pad with ' ' to the left
+**		- minus		pad with ' ' to the right
+**
+**	- i			the signed int to print
+**	- list		the element to start writing from in the list
+**	- flags		the flags (such as #05-8) in structure form
+** -------------------------------------------------------------------- */
 void	printf_i(long int i, t_pflist **list, t_pfflags flags)
 {
 	if (flags.dot || i)
@@ -99,7 +99,7 @@ void	printf_i(long int i, t_pflist **list, t_pfflags flags)
 	{
 		if (i < 0 || flags.space >= 0 || flags.plus >= 0)
 			printf_pad(&((*list)->next), flags.zero - printf_lstsize(*list),
-					'l', '0');
+				'l', '0');
 		else
 			printf_pad(list, flags.zero - printf_lstsize(*list), 'l', '0');
 	}
@@ -110,27 +110,27 @@ void	printf_i(long int i, t_pflist **list, t_pfflags flags)
 }
 
 /* -------------------------------------------------------------------- **
- **		printf_u
- **
- **	Order :
- **		1. the number
- **		2. dot padding
- **		3. hex prefix '0x'
- **		4. zero padding
- **		5. blank padding
- **
- **	The following flags are taken into account :
- **		- sharp		adds a '0x' before the hexadecimal value
- **		- dot		pad with '0' to the left (ignores non-digits)
- **		- zero		pad with '0' to the left (includes non-digits)
- **		- width		pad with ' ' to the left
- **		- minus		pad with ' ' to the right
- **
- **	- u			the unsigned int to print
- **	- type		the type (u, x, X) of the conversion
- **	- list		the element to start writing from in the list
- **	- flags		the flags (such as #05-8) in structure form
- ** -------------------------------------------------------------------- */
+**		printf_u
+**
+**	Order :
+**		1. the number
+**		2. dot padding
+**		3. hex prefix '0x'
+**		4. zero padding
+**		5. blank padding
+**
+**	The following flags are taken into account :
+**		- sharp		adds a '0x' before the hexadecimal value
+**		- dot		pad with '0' to the left (ignores non-digits)
+**		- zero		pad with '0' to the left (includes non-digits)
+**		- width		pad with ' ' to the left
+**		- minus		pad with ' ' to the right
+**
+**	- u			the unsigned int to print
+**	- type		the type (u, x, X) of the conversion
+**	- list		the element to start writing from in the list
+**	- flags		the flags (such as #05-8) in structure form
+** -------------------------------------------------------------------- */
 void	printf_u(unsigned int u, char type, t_pflist **list, t_pfflags flags)
 {
 	if (flags.dot || u)
@@ -148,7 +148,7 @@ void	printf_u(unsigned int u, char type, t_pflist **list, t_pfflags flags)
 		printf_lstadd_front(list, '0');
 		if (flags.zero >= 0)
 			printf_pad(&((*list)->next->next),
-					flags.zero - printf_lstsize(*list), 'l', '0');
+				flags.zero - printf_lstsize(*list), 'l', '0');
 	}
 	else if (flags.zero >= 0)
 		printf_pad(list, flags.zero - printf_lstsize(*list), 'l', '0');
